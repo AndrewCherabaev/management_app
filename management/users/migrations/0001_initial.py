@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             name='Programmer',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('experience', models.TimeField(blank=True, null=True)),
+                ('_experience', models.BigIntegerField(blank=True, db_column='experience', null=True)),
                 ('languages', models.ManyToManyField(blank=True, null=True, to='languages.Language')),
                 ('technologies', models.ManyToManyField(blank=True, null=True, to='languages.Technology')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),

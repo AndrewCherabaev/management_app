@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-import debug_toolbar
 
 from users.urls import user_router
 from languages.urls import language_router
@@ -27,6 +26,5 @@ urlpatterns = [
     *projects_router.urls,
 
     #thirdparty
-    path('__debug__/', include(debug_toolbar.urls)),
     path('admin/', admin.site.urls),
 ]

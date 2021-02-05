@@ -7,22 +7,24 @@ class Programmer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     languages = models.ManyToManyField(Language, blank=True, null=True)
     technologies = models.ManyToManyField(Technology, blank=True, null=True)
-    experience = models.TimeField(blank=True, null=True)
+    _experience = models.BigIntegerField(blank=True, null=True, db_column='experience')
 
     def __str__(self):
         return f'<{self.user.username}> ({self.user.first_name[0:1]}. {self.user.last_name})'
 
     def languages_names(self):
-        langs = []
-        for l in self.languages.all():
-            langs.append(l.name)
-        return ', '.join(langs)
+        return ', '.join([language.name for language in self.languages.all()])
 
     def technologies_names(self):
-        techs = []
-        for l in self.technologies.all():
-            techs.append(l.name)
-        return ', '.join(techs)
+        return ', '.join([technology.name for technology in self.technologies.all()])
+
+    def experience(self):
+        experience = self._experience or 0
+        years = experience // 365
+        months = experience % 365 // 30
+        days = experience % 365 % 30
+
+        return f'{years} years {months} months {days} days'
 
     class Meta:
-        ordering = ['user', 'experience']
+        ordering = ['user', '_experience']
