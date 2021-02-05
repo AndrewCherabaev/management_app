@@ -20,11 +20,15 @@ class Programmer(models.Model):
 
     def experience(self):
         experience = self._experience or 0
-        years = experience // 365
-        months = experience % 365 // 30
-        days = experience % 365 % 30
+        years = experience // self.Exp.YEAR
+        months = experience % self.Exp.YEAR // self.Exp.MONTH
+        days = experience % self.Exp.YEAR % self.Exp.MONTH
 
         return f'{years} years {months} months {days} days'
 
     class Meta:
         ordering = ['user', '_experience']
+
+    class Exp:
+        YEAR = 365
+        MONTH = 30
